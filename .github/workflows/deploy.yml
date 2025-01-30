@@ -32,8 +32,9 @@ jobs:
           chmod +x ./build.webgpu.sh
           ./build.webgpu.sh
 
+      - name: prepare folder
+        run: |
           mkdir page_dist
-
           mv wasm_webgl2 page_dist
           mv wasm_webgpu page_dist
           mv assets page_dist
