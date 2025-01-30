@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run build script
+        run: |
+          rustc --version
+
+          curl -L https://github.com/WebAssembly/binaryen/releases/download/version_120_b/binaryen-version_120_b-x86_64-linux.tar.gz | tar xz
+          sudo mv binaryen*/bin/wasm-opt /usr/local/bin
+          sudo rm -rf binaryen*
+          wasm-opt --version
+
+          rustup target add wasm32-unknown-unknown
+          cargo install wasm-bindgen-cli --version 0.2.99
+          wasm-bindgen --version
+
+          chmod +x ./build.webgl2.sh
+          ./build.webgl2.sh
+
+          chmod +x ./build.webgpu.sh
+          ./build.webgpu.sh
+
+          mkdir page_dist
+
+          mv wasm_webgl2 page_dist
+          mv wasm_webgpu page_dist
+          mv aseetss page_dist
+          mv index.html page_dist
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./page_dist
