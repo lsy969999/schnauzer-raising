@@ -10,7 +10,14 @@ edition = "2021"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [features]
-default = ["bevy/bevy_window", "bevy/bevy_winit"]
+default = [
+    "bevy/bevy_window",
+    "bevy/bevy_winit",
+    "bevy/bevy_core_pipeline",
+    "bevy/bevy_ui",
+    "bevy/bevy_text",
+    "bevy/default_font",
+]
 inspector = ["bevy-inspector-egui", "iyes_perf_ui"]
 webgl2 = ["bevy/webgl2"]
 webgpu = ["bevy/webgpu"]
@@ -26,10 +33,23 @@ bevy-inspector-egui = { version = "0.29.1", features = [
 ], default-features = false, optional = true }
 iyes_perf_ui = { git = "https://github.com/IyesGames/iyes_perf_ui.git", branch = "main", optional = true }
 
+# desktop dependencies
+[target.'cfg(not(any(target_os = "ios", target_os = "android", target_family = "wasm")))'.dependencies]
+directories = "5.0"
 
+# android dependencies
+[target.'cfg(target_os = "android")'.dependencies]
+jni_fn = "0.1"
+jni = "0.21"
+ndk-context = "0.1"
+
+# ios dependencies
+[target.'cfg(target_os = "ios")'.dependencies]
+raw-window-handle = "0.6"
+
+# wasm dependencies
 [target.'cfg(target_family = "wasm")'.dependencies]
-wasm-bindgen = "0.2.99"
-
+wasm-bindgen = "0.2"
 
 # Enable a small amount of optimization in the dev profile.
 [profile.dev]

@@ -2,6 +2,7 @@ mod app;
 mod asset;
 mod crossbeam;
 mod ffi;
+#[cfg(feature = "inspector")]
 mod inspector;
 
 #[bevy::prelude::bevy_main]

@@ -19,6 +19,7 @@ impl FfiAppInterface for FfiApp {
                         ..default()
                     }),
             )
+            .add_plugins(crate::app::AppPlugin)
             .run();
     }
 }
