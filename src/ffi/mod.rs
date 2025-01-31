@@ -7,6 +7,9 @@ pub mod wasm;
 #[cfg(target_os = "ios")]
 pub mod ios;
 
+#[cfg(target_os = "android")]
+pub mod android;
+
 pub struct FfiApp;
 
 pub trait FfiAppInterface {

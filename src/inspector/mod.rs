@@ -5,6 +5,8 @@ use bevy_inspector_egui::{
 };
 use iyes_perf_ui::{prelude::*, PerfUiPlugin};
 
+use crate::{app::state::AppState, asset::resource::DefaultAsset};
+
 pub struct InspectorPlugin;
 
 impl Plugin for InspectorPlugin {
@@ -54,6 +56,27 @@ fn inspector_ui(world: &mut World, mut is_perf_ui_hide: Local<bool>) {
                         *v = Visibility::Hidden;
                     }
                     *is_perf_ui_hide = !*is_perf_ui_hide;
+                }
+
+                if ui.button("test home toggle").clicked() {
+                    let mut a = world.query_filtered::<Entity, With<Sprite>>();
+                    let v = a.iter(world).collect::<Vec<_>>();
+                    for b in v {
+                        world.commands().entity(b).despawn_recursive();
+                    }
+
+                    world.commands().remove_resource::<DefaultAsset>();
+                    let current_state = world.resource::<State<AppState>>().get().clone();
+
+                    let mut next_state = world.resource_mut::<NextState<AppState>>();
+                    match current_state {
+                        AppState::Home => {
+                            next_state.set(AppState::DefaultAssetLoading);
+                        }
+                        _ => {
+                            // next_state.set(AppState::Home);
+                        }
+                    }
                 }
             });
         });

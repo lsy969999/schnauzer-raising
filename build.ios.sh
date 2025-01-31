@@ -1,0 +1,1 @@
+cargo rustc --crate-type staticlib --lib --release --target aarch64-apple-ios
