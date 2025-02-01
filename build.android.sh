@@ -5,4 +5,4 @@
 #     -o ./android/android_studio/app/src/main/jniLibs build --release --features android
 
 cargo ndk  -t arm64-v8a \
-    -o ./android/android_studio/app/src/main/jniLibs build --release --features android
+    -o ./android/android_studio/app/src/main/jniLibs build --features android
