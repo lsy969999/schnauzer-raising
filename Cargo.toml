@@ -19,6 +19,7 @@ default = [
     "bevy/default_font",
     "bevy/png",
     "bevy/bevy_render",
+    "bevy/multi_threaded",
 ]
 inspector = ["bevy-inspector-egui", "iyes_perf_ui"]
 webgl2 = ["bevy/webgl2"]
@@ -31,6 +32,8 @@ bevy = { version = "0.15.1", default-features = false }
 bevy_asset_loader = "0.22.0"
 bevy_common_assets = "0.12.0"
 bevy_crossbeam_event = "0.7.0"
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1", features = ["rt-multi-thread"] }
 
 bevy-inspector-egui = { version = "0.29.1", features = [
     "bevy_render",
@@ -51,6 +54,8 @@ ndk-context = "0.1"
 # ios dependencies
 [target.'cfg(target_os = "ios")'.dependencies]
 raw-window-handle = "0.6"
+objc2 = "0.6.0"
+
 
 # wasm dependencies
 [target.'cfg(target_family = "wasm")'.dependencies]
