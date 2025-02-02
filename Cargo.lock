@@ -4237,6 +4237,7 @@ dependencies = [
  "reqwest",
  "tokio",
  "wasm-bindgen",
+ "wasm-bindgen-futures",
 ]
 
 [[package]]
