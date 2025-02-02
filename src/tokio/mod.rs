@@ -5,8 +5,22 @@ pub struct TokioPlugin;
 impl Plugin for TokioPlugin {
     fn build(&self, app: &mut App) {
         //
+        let mut runtime = tokio::runtime::Builder::new_current_thread();
+        runtime.enable_all();
+        let runtime = runtime
+            .build()
+            .expect("Failed to create Tokio runtime for background tasks");
+        app.insert_resource(TokioRuntime(runtime));
+
+        app.add_systems(PostStartup, |rt: Res<TokioRuntime>| {
+            //
+            // rt.0.spawn(asdf);
+        });
     }
 }
+
+#[derive(Resource)]
+pub struct TokioRuntime(pub tokio::runtime::Runtime);
 
 // fn test() {
 //     let thread_pool = AsyncComputeTaskPool::get();
@@ -50,3 +64,7 @@ impl Plugin for TokioPlugin {
 
 //     // tokio::task::spawn_blocking(task);
 // }
+
+async fn asdf() {
+    //
+}

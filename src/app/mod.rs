@@ -13,7 +13,8 @@ impl Plugin for AppPlugin {
 
         // inner plugin
         app.add_plugins(crate::asset::AssetPlugin)
-            .add_plugins(crate::ui::UiPlugin);
+            .add_plugins(crate::ui::UiPlugin)
+            .add_plugins(crate::tokio::TokioPlugin);
 
         app.init_state::<AppState>();
 
