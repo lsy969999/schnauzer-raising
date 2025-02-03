@@ -21,17 +21,37 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        background: white;
+      }
+      .canvas-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        /* 16/9 = 1.7777, 9/16 = 0.5625*/
+        width: min(100vw, 56.25vh);  /* 9:16 유지, 가로 기준 */
+        height: min(177.77vw, 100vh); /* 9:16 유지, 세로 기준 */
+        
       }
     </style>
     <title>SchnauzerRaising</title>
   </head>
   <body>
     <progress id="progress" max="100" value="0"></progress>
-    <canvas id="target"></canvas>
+    <div class="canvas-container">
+        <canvas id="target"></canvas>
+    </div>
   </body>
   <script type="module">
     window.bevyProgressiveFetch = async (resource) => {
-        return progressive_fetch(resource, 16244146, {
+        return progressive_fetch(resource, 15230951, {
             start: (length) => {
                 //console.log('[progressive_fetch] start', length)
             },
@@ -61,8 +81,11 @@
         await wasm.default()
         await wasm.main()
     }
-    */
+
     console.log('webgl2');
+    
+    */
+    
     const wasm = await import('./wasm_webgl2/schnauzer_raising.js');
     Object.assign(window, wasm);
     await wasm.default()
